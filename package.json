@@ -1,7 +1,7 @@
 {
-  "name": "logseq-starter-plugin",
+  "name": "logseq-twitter-extractor",
   "version": "1.0",
-  "description": "Starter Plugin",
+  "description": "Twitter Extractor",
   "main": "dist/index.html",
   "targets": {
     "main": false
@@ -14,14 +14,29 @@
   "author": "Aryan Sawhney",
   "license": "MIT",
   "dependencies": {
-    "@logseq/libs": "0.0.1-alpha.34"
+    "@logseq/libs": "0.0.1-alpha.35",
+    "axios": "^0.26.1",
+    "logseq-dateutils": "^0.0.20",
+    "twitter": "^1.7.1",
+    "v2-twitter": "^1.0.23"
   },
   "logseq": {
-    "id": "logseq-starter-plugin",
-    "title": "logseq-starter-plugin",
+    "id": "logseq-twitter-extractor",
+    "title": "logseq-twitter-extractor",
     "icon": "./icon.png"
   },
   "devDependencies": {
-    "parcel": "^2.0.0"
+    "assert": "^2.0.0",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "events": "^3.3.0",
+    "https-browserify": "^1.0.0",
+    "parcel": "^2.0.0",
+    "path-browserify": "^1.0.1",
+    "querystring-es3": "^0.2.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "url": "^0.11.0"
   }
 }

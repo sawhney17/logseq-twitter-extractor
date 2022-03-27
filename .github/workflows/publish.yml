@@ -7,7 +7,7 @@ on:
       - '*' # Push events to matching any tag format, i.e. 1.0, 20.15.10
 
 env:
-  PLUGIN_NAME: logseq-starter-plugin
+  PLUGIN_NAME: logseq-twitter-extractor
 
 jobs:
   build:
@@ -35,6 +35,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ github.ref }}
+          BEARERTOKEN: ${{ secrets.BEARERTOKEN }}
         with:
           allowUpdates: true
           draft: false
