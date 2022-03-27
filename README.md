@@ -1,6 +1,7 @@
 # Logseq Twitter Extractor Plugin
 >If this plugin helps you, I'd really appreciate your support. You can [buy me a coffee here. ](https://www.buymeacoffee.com/sawhney17)
 A quick utility to parse a twitter link into a post with a user specified template. Inspired by the Roam Smartblock for twitter extraction.
+![Screen Recording 2022-03-27 at 5 12 12 PM](https://user-images.githubusercontent.com/80150109/160285175-a94d4431-8eaa-4ced-aec9-65adad85e211.gif)
 
 ## Instructions
 1. Navigate to a block with the twitter URL
