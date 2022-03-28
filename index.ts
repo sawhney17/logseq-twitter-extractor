@@ -52,7 +52,6 @@ function templateBlocks(data, template, url) {
   return finalString
 }
 async function parseTweet(id, uuid, url) {
-  logseq.App.showMsg(`Token is ${BEARERTOKEN}`)
   axios.get(`https://api.twitter.com/2/tweets?ids=${id}&tweet.fields=created_at&expansions=author_id&user.fields=created_at`, {
     'headers': {
       "Authorization": `Bearer ${BEARERTOKEN}`
