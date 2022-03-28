@@ -1,6 +1,6 @@
 {
   "name": "logseq-twitter-extractor",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Twitter Extractor",
   "main": "dist/index.html",
   "targets": {
