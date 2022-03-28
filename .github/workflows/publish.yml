@@ -21,6 +21,8 @@ jobs:
           node-version: '16.x' # You might need to adjust this value to your own version
       - name: Build
         id: build
+        env:
+          BEARERTOKEN: ${{ secrets.BEARERTOKEN }}
         run: |
           npm i && npm run build
           mkdir ${{ env.PLUGIN_NAME }}
@@ -35,7 +37,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ github.ref }}
-          BEARERTOKEN: ${{ secrets.BEARERTOKEN }}
         with:
           allowUpdates: true
           draft: false
