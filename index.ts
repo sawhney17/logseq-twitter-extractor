@@ -66,7 +66,7 @@ async function parseTweet(id, uuid, url) {
 async function detectURL(e) {
   try {
     let url = (await logseq.Editor.getBlock(e.uuid)).content.match(tweetRegex)
-    let id = url[0].split("/")[5]
+    let id = url[0].split("/")[5].split("?")[0]
     parseTweet(id, e.uuid, url)
   }
   catch {
