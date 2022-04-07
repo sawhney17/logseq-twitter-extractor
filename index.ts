@@ -6,10 +6,9 @@ import { getDateForPage, getDateForPageWithoutBrackets } from "logseq-dateutils"
 
 
 var userConfigs;
-logseq.App.getUserConfigs().then((result)=>{userConfigs = result})
+logseq.App.getUserConfigs().then((result) => { userConfigs = result })
 let BEARERTOKEN = process.env.BEARERTOKEN
 let baseURL = "https://api.twitter.com/2/tweets/";
-//Inputs 5 numbered blocks when called
 
 let tweetRegex = /https:\/\/twitter.com.\S*/g
 
@@ -26,9 +25,17 @@ let settings: SettingSchemaDesc[] = [{
   title: "Insertion template for block 2",
   description: "Enter your desired template for the child block, created by default only if template is present, for every return value of the query. Options are URL, Name, Username, Date, and Tweet",
   default: ""
-}]
+},
+{ //add option for keyboard shortcut
+  key: "KeyboardShortcut",
+  type: "string",
+  title: "Keyboard Shortcut",
+  description: "Enter your desired keyboard shortcut for the command",
+  default: "mod+shift+t"
+}
+]
 
-function formatDate(dateText){
+function formatDate(dateText) {
   var dateObject = new Date(dateText)
   const date = getDateForPageWithoutBrackets(dateObject, userConfigs.preferredDateFormat)
   return date
@@ -59,7 +66,7 @@ async function parseTweet(id, uuid, url) {
   }).then((result) => {
     logseq.Editor.updateBlock(uuid, templateBlocks(result.data, logseq.settings.InsertionTemplateForBlock1, url))
     if (logseq.settings.InsertionTemplateForBlock2 != "") {
-      logseq.Editor.insertBlock(uuid, templateBlocks(result.data, logseq.settings.InsertionTemplateForBlock2, url), {sibling: false})
+      logseq.Editor.insertBlock(uuid, templateBlocks(result.data, logseq.settings.InsertionTemplateForBlock2, url), { sibling: false })
     }
   })
 }
@@ -82,6 +89,26 @@ const main = async () => {
   logseq.Editor.registerSlashCommand("Parse Twitter URL", async (e) => {
     detectURL(e);
   });
+  logseq.App.registerCommandPalette({
+    key: "ParseTwitter",
+    label: "Parse Twitter URL(s)",
+    keybinding: {
+      mode: "global",
+      binding: "mod+shift+t"
+    },
+  }, (e) => {
+    if (e.uuid != null) {
+      detectURL(e);
+    }
+    else {
+      logseq.Editor.getSelectedBlocks().then((blocks) => {
+        for (const x in blocks){
+          detectURL(blocks[x])
+        }
+      }
+      )
+    }
+  })
 };
 
 logseq.ready(main).catch(console.error);
