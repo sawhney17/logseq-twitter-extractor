@@ -41,12 +41,12 @@ async function formatDate(dateText) {
 }
 logseq.useSettingsSchema(settings);
 
-function templateBlocks(data, template, url) {
+async function templateBlocks(data, template, url) {
   var finalString = template
   console.log(data)
   let replacements = {
     "URL": url,
-    "Date": formatDate(data.data[0].created_at),
+    "Date": await formatDate(data.data[0].created_at),
     "Tweet": data.data[0].text,
     "Name": data["includes"]["users"][0]["name"],
     "Username": data["includes"]["users"][0]["username"],
@@ -62,10 +62,10 @@ async function parseTweet(id, uuid, url) {
     'headers': {
       "Authorization": `Bearer ${BEARERTOKEN}`
     }
-  }).then((result) => {
-    logseq.Editor.updateBlock(uuid, templateBlocks(result.data, logseq.settings.InsertionTemplateForBlock1, url))
+  }).then(async (result) => {
+    logseq.Editor.updateBlock(uuid, await templateBlocks(result.data, logseq.settings.InsertionTemplateForBlock1, url))
     if (logseq.settings.InsertionTemplateForBlock2 != "") {
-      logseq.Editor.insertBlock(uuid, templateBlocks(result.data, logseq.settings.InsertionTemplateForBlock2, url), { sibling: false })
+      logseq.Editor.insertBlock(uuid, await templateBlocks(result.data, logseq.settings.InsertionTemplateForBlock2, url), { sibling: false })
     }
   })
 }
