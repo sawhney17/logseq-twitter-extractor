@@ -36,7 +36,11 @@ let settings: SettingSchemaDesc[] = [{
 async function formatDate(dateText) {
   var dateObject = new Date(dateText)
   
-  const date = getDateForPageWithoutBrackets(dateObject, (await logseq.App.getUserConfigs()).preferredDateFormat)
+  const dateFormat = (await logseq.App.getUserConfigs()).preferredDateFormat
+  console.log(dateObject)
+  console.log(dateFormat)
+  const date = getDateForPageWithoutBrackets(dateObject, dateFormat)
+  console.log(date)
   return date
 }
 logseq.useSettingsSchema(settings);
