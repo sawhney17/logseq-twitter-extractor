@@ -5,8 +5,6 @@ import 'logseq-dateutils'
 import { getDateForPage, getDateForPageWithoutBrackets } from "logseq-dateutils";
 
 
-var userConfigs;
-logseq.App.getUserConfigs().then((result) => { userConfigs = result })
 let BEARERTOKEN = process.env.BEARERTOKEN
 let baseURL = "https://api.twitter.com/2/tweets/";
 
@@ -35,9 +33,10 @@ let settings: SettingSchemaDesc[] = [{
 }
 ]
 
-function formatDate(dateText) {
+async function formatDate(dateText) {
   var dateObject = new Date(dateText)
-  const date = getDateForPageWithoutBrackets(dateObject, userConfigs.preferredDateFormat)
+  
+  const date = getDateForPageWithoutBrackets(dateObject, (await logseq.App.getUserConfigs()).preferredDateFormat)
   return date
 }
 logseq.useSettingsSchema(settings);
@@ -84,7 +83,6 @@ async function detectURL(e) {
 }
 
 const main = async () => {
-  userConfigs = await logseq.App.getUserConfigs()
   console.log("plugin loaded");
   logseq.Editor.registerSlashCommand("Parse Twitter URL", async (e) => {
     detectURL(e);
