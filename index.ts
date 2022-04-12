@@ -4,11 +4,10 @@ import axios from "axios";
 import 'logseq-dateutils'
 import { getDateForPage, getDateForPageWithoutBrackets } from "logseq-dateutils";
 
-
 let BEARERTOKEN = process.env.BEARERTOKEN
-let baseURL = "https://api.twitter.com/2/tweets/";
-
-let tweetRegex = /https:\/\/twitter.com.\S*/g
+const defaultKey = "mod+shift+x"
+const baseURL = "https://api.twitter.com/2/tweets/";
+const tweetRegex = /https:\/\/twitter.com.\S*/g
 
 let settings: SettingSchemaDesc[] = [{
   key: "InsertionTemplateForBlock1",
@@ -28,8 +27,8 @@ let settings: SettingSchemaDesc[] = [{
   key: "KeyboardShortcut",
   type: "string",
   title: "Keyboard Shortcut",
-  description: "Enter your desired keyboard shortcut for the command",
-  default: "mod+shift+t"
+  description: `Enter your desired keyboard shortcut for the command, default (${defaultKey})`,
+  default: defaultKey
 }
 ]
 
@@ -81,7 +80,7 @@ async function detectURL(e) {
   }
   catch {
     logseq.App.showMsg(
-      "No URL detected",
+      "Error: No URL detected",
     )
   }
 }
@@ -91,12 +90,13 @@ const main = async () => {
   logseq.Editor.registerSlashCommand("Parse Twitter URL", async (e) => {
     detectURL(e);
   });
-  logseq.App.registerCommandPalette({
+
+  const registerKeyXtract = () => logseq.App.registerCommandPalette({
     key: "ParseTwitter",
     label: "Parse Twitter URL(s)",
     keybinding: {
       mode: "global",
-      binding: "mod+shift+t"
+      binding: logseq.settings.KeyboardShortcut.toLowerCase()
     },
   }, (e) => {
     if (e.uuid != null) {
@@ -111,6 +111,10 @@ const main = async () => {
       )
     }
   })
+
+  logseq.onSettingsChanged((_updated) => {
+    registerKeyXtract()
+  }); 
 };
 
 logseq.ready(main).catch(console.error);
