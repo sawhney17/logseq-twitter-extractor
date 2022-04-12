@@ -113,6 +113,7 @@ const main = async () => {
   })
 
   logseq.onSettingsChanged((_updated) => {
+    logseq.App.unregister_plugin_simple_command(`${logseq.baseInfo.id}/KeyboardShortcut`) 
     registerKeyXtract()
   }); 
 };
